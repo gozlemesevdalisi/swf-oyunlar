@@ -42,11 +42,7 @@ araclar/                Türkçe sürümü üreten araçlar
 
 ## Haklar ve teşekkür
 
-- **Feudalism** ve **Feudalism 2**: Vitaly Zaborov'un oyunlarıdır (ArcadeTown aracılığıyla
-  yayımlandı). Yapımcı, 14 Ekim 2026'da e-postayla, değiştirilmiş sürümlerin GitHub'da
-  paylaşılmasına, oyunların geliştirilmesine ve bütün kaynaklarının kullanılmasına izin verdi.
-  Tek ricası orijinal oyuna ya da kendisine atıf yapılması; bu yüzden her oyun sayfasında ve
-  burada adı geçer. Teşekkürler, Vitaly!
+
 - Türkçe sürümlerde internete bağlanan reklam (MochiAds) ve istatistik (MochiBot) çağrıları
   kapatıldı; Feudalism 2'de özel karakter oluşturma, bilgisayardan açıldığı gibi her yerde açıktır.
 - **Ruffle**: MIT ya da Apache-2.0 (`ruffle/LICENSE_MIT`, `ruffle/LICENSE_APACHE`).
