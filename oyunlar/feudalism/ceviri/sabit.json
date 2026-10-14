@@ -2,7 +2,7 @@
   "_aciklama": "Sabit yazılar (DefineText). Anahtar: yazının kimlik numarası. Her yazı, orijinaldeki satır/parça sayısı kadar parçadan oluşur. 'hiza': 'orta' verilirse satırlar eski yazının ortasına hizalanır; 'boyut' yazıyı o oranda küçültür. Eksik harfler (ç, ğ, ı, İ, ö, ş, ü vb.) yazı tipine otomatik eklenir.",
   "160": { "parcalar": ["Yerini Koru [Home]", "Seçili askerlerin bulundukları", "yerde kalmasını sağlar."] },
   "161": { "parcalar": ["Silah Değiştir [PageUp]", "Menzilli silaha geçer ve geri", "döner. Bazı birliklerin", "değişecek silahı yoktur."] },
-  "162": { "parcalar": ["Küçük iksir", "50 can yeniler"] },
+  "162": { "parcalar": ["Küçük iksir", "40 can yeniler"] },
   "163": { "parcalar": ["Orta iksir", "300 can yeniler"] },
   "164": { "parcalar": ["Büyük iksir", "Kahramanı tamamen iyileştirir"] },
   "165": { "parcalar": ["Küçük şifa parşömeni", "Tüm birliklerin canının", "1/3'ünü yeniler."] },

@@ -7,7 +7,14 @@
 # ilk çalıştırmada araclar/.ffdec klasörüne indirilir; depoya girmez.
 set -euo pipefail
 
+if [ $# -ne 1 ] || [ ! -f "$1/$(basename "$1")-orijinal.swf" ]; then
+  echo "Kullanım: araclar/derle.sh oyunlar/<oyun>   (klasörde <oyun>-orijinal.swf olmalı)" >&2
+  exit 2
+fi
+
 FFDEC_SURUM="24.1.1"
+# İndirilen dosyanın bozulmadığını ya da değiştirilmediğini doğrulamak için SHA-256 özeti.
+FFDEC_SHA256="dfa3a36575fd62bccc19750707a2f9d3a01bfc183763a061f07cb4f8cf1e38ed"
 KOK="$(cd "$(dirname "$0")/.." && pwd)"
 OYUN_KLASORU="$(cd "$1" && pwd)"
 AD="$(basename "$OYUN_KLASORU")"
@@ -20,6 +27,11 @@ if [ ! -f "$FFDEC/ffdec-cli.jar" ]; then
   mkdir -p "$FFDEC"
   curl -sSL -o "$FFDEC/ffdec.zip" \
     "https://github.com/jindrapetrik/jpexs-decompiler/releases/download/version$FFDEC_SURUM/ffdec_$FFDEC_SURUM.zip"
+  if ! echo "$FFDEC_SHA256  $FFDEC/ffdec.zip" | sha256sum -c --quiet -; then
+    echo "HATA: indirilen FFDec dosyası beklenen dosya değil; derleme durduruldu." >&2
+    rm -f "$FFDEC/ffdec.zip"
+    exit 1
+  fi
   unzip -q -o "$FFDEC/ffdec.zip" -d "$FFDEC"
   rm "$FFDEC/ffdec.zip"
 fi

@@ -62,7 +62,10 @@
     ["\"Cost \"", "\"Fiyat: \""],
     ["\" gp.\"", "\" altın\""],
     ["\"Not enough gold!\"", "\"Altının yetmiyor!\""],
-    ["\" gold\"", "\" altın\""]
+    ["\" gold\"", "\" altın\""],
+    ["\"Kritik: \" + _loc2_.crit + \"%\\n\"", "\"Kritik: %\" + _loc2_.crit + \"\\n\""],
+    ["\"Kaçınma şansı: \" + _loc2_.crit + \"%\\n\"", "\"Kaçınma şansı: %\" + _loc2_.crit + \"\\n\""],
+    ["\"Saldırı hızı: \" + Math.round(100 / (_loc2_.t_bef + _loc2_.t_aft) * 100) / 100 + \"\\n\"", "\"Saldırı hızı: \" + String(Math.round(100 / (_loc2_.t_bef + _loc2_.t_aft) * 100) / 100).split(\".\").join(\",\") + \"\\n\""]
   ],
   "__Packages/BarracksIcon.as": [
     ["\"Hit Pionts: \"", "\"Can: \""],
@@ -77,7 +80,11 @@
     ["\"Cost \"", "\"Fiyat: \""],
     ["\" gp.\"", "\" altın\""],
     ["\"Not enough gold!\"", "\"Altının yetmiyor!\""],
-    ["\" gold\"", "\" altın\""]
+    ["\" gold\"", "\" altın\""],
+    ["\"Kaçınma: \" + this.anim.FLEE + \"%\" + (this.anim.SHIELD_FLEE <= 0 ? \"\" : \"+\" + this.anim.SHIELD_FLEE + \"% (kalkan)\")", "\"Kaçınma: %\" + this.anim.FLEE + (this.anim.SHIELD_FLEE <= 0 ? \"\" : \" +%\" + this.anim.SHIELD_FLEE + \" (kalkan)\")"],
+    ["\"İsabet: \" + this.anim.wpn.HIT + \"%\\n\"", "\"İsabet: %\" + this.anim.wpn.HIT + \"\\n\""],
+    ["\"Kritik: \" + this.anim.wpn.CRIT + \"%\\n\\n\"", "\"Kritik: %\" + this.anim.wpn.CRIT + \"\\n\\n\""],
+    ["\"Saldırı hızı: \" + Math.round(100 / (this.anim.wpn.t_bef + this.anim.wpn.t_aft) * 100) / 100 + \"\\n\"", "\"Saldırı hızı: \" + String(Math.round(100 / (this.anim.wpn.t_bef + this.anim.wpn.t_aft) * 100) / 100).split(\".\").join(\",\") + \"\\n\""]
   ],
   "__Packages/BarnIcon.as": [
     ["\"Hit Pionts bonus: \"", "\"Can bonusu: \""],
@@ -112,7 +119,11 @@
     ["\"Attack Speed: \"", "\"Saldırı hızı: \""],
     ["\"Range: \"", "\"Menzil: \""],
     ["\"Hit rate: \"", "\"İsabet: \""],
-    ["\"Crit Rate: \"", "\"Kritik: \""]
+    ["\"Crit Rate: \"", "\"Kritik: \""],
+    ["\"Kaçınma: \" + hero_ico.anim.FLEE + \"%\" + (hero_ico.anim.SHIELD_FLEE <= 0 ? \"\" : \"+\" + hero_ico.anim.SHIELD_FLEE + \"% (kalkan)\")", "\"Kaçınma: %\" + hero_ico.anim.FLEE + (hero_ico.anim.SHIELD_FLEE <= 0 ? \"\" : \" +%\" + hero_ico.anim.SHIELD_FLEE + \" (kalkan)\")"],
+    ["\"İsabet: \" + hero_ico.anim.wpn.HIT + \"%\\n\"", "\"İsabet: %\" + hero_ico.anim.wpn.HIT + \"\\n\""],
+    ["\"Kritik: \" + hero_ico.anim.wpn.CRIT + \"%\\n\"", "\"Kritik: %\" + hero_ico.anim.wpn.CRIT + \"\\n\""],
+    ["\"Saldırı hızı: \" + Math.round(100 / (hero_ico.anim.wpn.t_bef + hero_ico.anim.wpn.t_aft) * 100) / 100 + \"\\n\"", "\"Saldırı hızı: \" + String(Math.round(100 / (hero_ico.anim.wpn.t_bef + hero_ico.anim.wpn.t_aft) * 100) / 100).split(\".\").join(\",\") + \"\\n\""]
   ],
   "DefineSprite_1898/frame_5/DoAction.as": [["\" lv. \"", "\" sv. \""]],
   "DefineSprite_1898/frame_9/DoAction.as": [["\" lv. \"", "\" sv. \""]],

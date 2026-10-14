@@ -1272,7 +1272,10 @@
     [
       "this.type_txt.text = _loc2_.TYPE;",
       "var __tur = {OnehandedSword:\"Tek elli kılıç\",TwohandedSword:\"İki elli kılıç\",OnehandedAxe:\"Tek elli balta\",TwohandedAxe:\"İki elli balta\",OnehandedMace:\"Tek elli topuz\",TwohandedMace:\"İki elli topuz\",Spear:\"Mızrak\",Dagger:\"Hançer\",Staff:\"Asa\",Katana:\"Katana\",NinjaTo:\"Ninja-to\",Katar:\"Katar\",Bow:\"Yay\",Crossbow:\"Arbalet\",Throwing:\"Fırlatma silahı\",Shield:\"Kalkan\",Fists:\"Yumruk\"}[_loc2_.TYPE];\n            this.type_txt.text = __tur != undefined ? __tur : _loc2_.TYPE;"
-    ]
+    ],
+    ["\" (\" + unit_mc.wpnPri.CRIT + \"% kritik)\\n\"", "\" (%\" + unit_mc.wpnPri.CRIT + \" kritik)\\n\""],
+    ["\"Saldırı hızı +\" + _loc2_.aspd_bonus + \"%\\n\"", "\"Saldırı hızı +%\" + _loc2_.aspd_bonus + \"\\n\""],
+    ["\"Saldırı hızı: \" + Math.round(12000 / unit_mc.aspd_delay) / 100 + \"\\n\"", "\"Saldırı hızı: \" + String(Math.round(12000 / unit_mc.aspd_delay) / 100).split(\".\").join(\",\") + \"\\n\""]
   ],
   "__Packages/Cities.as": [
     [
@@ -1338,7 +1341,8 @@
     [
       "\"Lv. \"",
       "\"Sv. \""
-    ]
+    ],
+    ["\"Başarı şansı: \" + _loc4_ + \"%\\n\"", "\"Başarı şansı: %\" + _loc4_ + \"\\n\""]
   ],
   "__Packages/StoreIcon.as": [
     [
@@ -1498,7 +1502,11 @@
     [
       "\"Crit Rate: \"",
       "\"Kritik: \""
-    ]
+    ],
+    ["\"Kaçınma: \" + hero_ico.anim.FLEE + \"%\" + (hero_ico.anim.SHIELD_FLEE <= 0 ? \"\" : \"+\" + hero_ico.anim.SHIELD_FLEE + \"% (kalkan)\")", "\"Kaçınma: %\" + hero_ico.anim.FLEE + (hero_ico.anim.SHIELD_FLEE <= 0 ? \"\" : \" +%\" + hero_ico.anim.SHIELD_FLEE + \" (kalkan)\")"],
+    ["\"İsabet: \" + hero_ico.anim.wpn.HIT + \"%\\n\"", "\"İsabet: %\" + hero_ico.anim.wpn.HIT + \"\\n\""],
+    ["\"Kritik: \" + hero_ico.anim.wpn.CRIT + \"%\\n\"", "\"Kritik: %\" + hero_ico.anim.wpn.CRIT + \"\\n\""],
+    ["\"Saldırı hızı: \" + Math.round(100 / (hero_ico.anim.wpn.t_bef + hero_ico.anim.wpn.t_aft) * 100) / 100 + \"\\n\"", "\"Saldırı hızı: \" + String(Math.round(100 / (hero_ico.anim.wpn.t_bef + hero_ico.anim.wpn.t_aft) * 100) / 100).split(\".\").join(\",\") + \"\\n\""]
   ],
   "DefineButton2_2819/BUTTONCONDACTION on(rollOver).as": [
     [

@@ -51,7 +51,8 @@ Bir metnin kimlik numarasını bulmak için orijinal SWF'yi FFDec ile açıp (`a
 
 ## Oyunun kodunu değiştirmek
 
-Oyunun kodu ActionScript 2'dir ve yaklaşık 12.800 satırdır. Önemli sınıflar:
+Oyunların kodu ActionScript 2'dir: Feudalism yaklaşık 12.800, Feudalism 2 yaklaşık 29.000 satır
+(Feudalism 2'nin bir kısmı Flash'ın hazır arayüz bileşenleridir). Önemli sınıflar:
 
 | Sınıf          | Görevi                                        |
 | -------------- | --------------------------------------------- |
@@ -63,6 +64,7 @@ Oyunun kodu ActionScript 2'dir ve yaklaşık 12.800 satırdır. Önemli sınıfl
 | `Creature`, `Soldier`, `Player` | Savaştaki davranışlar        |
 | `Quest`        | Görevler                                      |
 | `WorldMap`     | Dünya haritası                                |
+| `Skill`, `Aura`, `Rune`, `MouseHint` | Feudalism 2: beceriler, auralar, rünler ve ipucu kutuları |
 
 Kod değişikliği de çeviri gibi `kod.json` üzerinden yapılır: değiştirilecek satır "eski",
 yeni hâli "yeni" olarak yazılır. Böylece her değişiklik orijinale göre kayıtlı kalır ve

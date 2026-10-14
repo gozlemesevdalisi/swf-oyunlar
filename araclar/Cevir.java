@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * SWF dosyasındaki sabit yazıları (DefineText) ve ekran kutularını (DefineEditText) çeviri
- * tablolarına göre değiştirir. Gömülü yazı tiplerinde olmayan harfleri benzer ücretsiz yazı
- * tiplerinden ekler.
+ * SWF dosyasındaki sabit yazıları (DefineText), ekran kutularını (DefineEditText) ve resim olarak
+ * çizilmiş yazıları çeviri tablolarına göre değiştirir. Gömülü yazı tiplerinde olmayan harfleri
+ * benzer ücretsiz yazı tiplerinden ekler.
  *
  * <p>Kullanım: java -cp "ffdec/lib/*" Cevir.java girdi.swf cikti.swf ceviri-klasoru depo-koku
  */
@@ -65,7 +65,7 @@ public class Cevir {
       SOURCE_FONTS.put(Integer.parseInt(m.getName()), font);
     }
 
-    // Gerekli harfler önceden eklenir; metin değiştirilirken eksik harf kalmamalıdır.
+    // Oynatıcının kullandığı Liberation yazı tipleri; kutu genişliklerini ölçmek için.
     String[][] device = {
       {"sans", "Sans"}, {"serif", "Serif"},
     };
@@ -79,6 +79,7 @@ public class Cevir {
       DEVICE_FONTS.put(d[0], byStyle);
     }
 
+    // Gerekli harfler önceden eklenir; metin değiştirilirken eksik harf kalmamalıdır.
     MissingCharacterHandler addGlyph = new MissingCharacterHandler() {
       @Override
       public boolean handle(TextTag text, FontTag font, char c) {
@@ -315,7 +316,7 @@ public class Cevir {
       ERRORS.add(id + " sabit yazı değil");
       return false;
     }
-    List<double[]> oldLines = center ? lineExtents(swf, tag) : null;
+    List<double[]> oldLines = center ? lineExtents(tag) : null;
 
     String formatted = tag.getFormattedText(false).text;
     StringBuilder result = new StringBuilder();
@@ -348,7 +349,7 @@ public class Cevir {
       ERRORS.add(id + ": yazı ayarlanamadı");
       return false;
     }
-    if (center) centerLines(swf, tag, oldLines);
+    if (center) centerLines(tag, oldLines);
     tag.updateTextBounds();
     tag.setModified(true);
     return true;
@@ -392,7 +393,7 @@ public class Cevir {
   }
 
   /** Her satırın başlangıç x'ini ve genişliğini (twip) döndürür. */
-  private static List<double[]> lineExtents(SWF swf, StaticTextTag tag) {
+  private static List<double[]> lineExtents(StaticTextTag tag) {
     List<double[]> lines = new ArrayList<>();
     int x = 0;
     for (TEXTRECORD r : tag.textRecords) {
@@ -406,7 +407,7 @@ public class Cevir {
   }
 
   /** Yeni satırları, eski satırların orta noktasına göre yerleştirir. */
-  private static void centerLines(SWF swf, StaticTextTag tag, List<double[]> oldLines) {
+  private static void centerLines(StaticTextTag tag, List<double[]> oldLines) {
     int line = 0;
     for (TEXTRECORD r : tag.textRecords) {
       if (r.glyphEntries.isEmpty() || line >= oldLines.size()) continue;
