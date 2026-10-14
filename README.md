@@ -6,13 +6,14 @@ Eski Flash (SWF) oyunlarım. Flash 2020'de kapandığı için oyunlar
 | Oyun                                  | Durum                                   |
 | ------------------------------------- | --------------------------------------- |
 | [Feudalism](oyunlar/feudalism/) 1.041k | Türkçe çeviri hazır; orijinali de duruyor |
+| [Feudalism 2](oyunlar/feudalism-2/) 1.02 | Türkçe çeviri hazır; orijinali de duruyor |
 
 ## Nasıl oynanır
 
 **Windows'ta (en kolayı):**
 
 1. https://ruffle.rs/downloads adresinden Ruffle'ın Windows sürümünü indirip açın.
-2. Bu depodan `oyunlar/feudalism/feudalism-tr.swf` dosyasını indirin
+2. Bu depodan `oyunlar/feudalism/feudalism-tr.swf` (ya da `oyunlar/feudalism-2/feudalism-2-tr.swf`) dosyasını indirin
    (dosyaya tıklayın, sağ üstteki indirme düğmesine basın).
 3. Dosyayı Ruffle ile açın (ya da Ruffle penceresine sürükleyin).
 
@@ -39,11 +40,15 @@ araclar/                Türkçe sürümü üreten araçlar
 
 Çeviriyi değiştirmek ya da oyunu geliştirmek için: [GELISTIRME.md](GELISTIRME.md).
 
-## Haklar
+## Haklar ve teşekkür
 
-- **Feudalism**: yapımcısına aittir (zaborov@mail.ru, ArcadeTown aracılığıyla yayımlandı).
-  Bu depo gizlidir ve kişisel kullanım içindir; değiştirilmiş sürüm yapımcının izni olmadan
-  herkese açık yayımlanmaz.
+- **Feudalism** ve **Feudalism 2**: Vitaly Zaborov'un oyunlarıdır (ArcadeTown aracılığıyla
+  yayımlandı). Yapımcı, 14 Ekim 2026'da e-postayla, değiştirilmiş sürümlerin GitHub'da
+  paylaşılmasına, oyunların geliştirilmesine ve bütün kaynaklarının kullanılmasına izin verdi.
+  Tek ricası orijinal oyuna ya da kendisine atıf yapılması; bu yüzden her oyun sayfasında ve
+  burada adı geçer. Teşekkürler, Vitaly!
+- Türkçe sürümlerde internete bağlanan reklam (MochiAds) ve istatistik (MochiBot) çağrıları
+  kapatıldı; Feudalism 2'de özel karakter oluşturma, bilgisayardan açıldığı gibi her yerde açıktır.
 - **Ruffle**: MIT ya da Apache-2.0 (`ruffle/LICENSE_MIT`, `ruffle/LICENSE_APACHE`).
 - **Liberation yazı tipleri**: SIL Open Font License 1.1 (`yazitipleri/OFL-1.1.txt`). Oyundaki
   Arial ve Times New Roman ile aynı ölçülerdedir; ekrandaki yazıların sığması için kullanılır.

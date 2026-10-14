@@ -6,6 +6,7 @@ Depo kökünden:
 
 ```sh
 araclar/derle.sh oyunlar/feudalism
+araclar/derle.sh oyunlar/feudalism-2
 ```
 
 Gerekenler: Java 17+, Python 3, curl, unzip. FFDec ilk çalıştırmada `araclar/.ffdec/` içine
@@ -40,6 +41,10 @@ Kurallar:
 - `kutular.json`'da `\n` yeni paragraf demektir. Orijinali birkaç satırlık olan kutular yazıyı
   kendisi kaydırır; tek satırlık etiketler yazıya göre genişler.
 
+- Kodun sonradan doldurduğu kutular için `kutular.json`'da `"kaydir": false` kaydırmayı kapatır.
+- Kodun yazı yazdığı ve yazı tipi oyuna gömülü kutularda (Feudalism 2'deki şehir başlığı gibi)
+  kullanılan yazı tipine, `yazitipleri.json`'da `"ekle"` ile Türkçe harfler önceden eklenir.
+
 Bir metnin kimlik numarasını bulmak için orijinal SWF'yi FFDec ile açıp (`araclar/.ffdec/ffdec.sh`)
 "texts" bölümüne bakılır; numara, metnin adındaki sayıdır.
 
@@ -61,6 +66,11 @@ Oyunun kodu ActionScript 2'dir ve yaklaşık 12.800 satırdır. Önemli sınıfl
 Kod değişikliği de çeviri gibi `kod.json` üzerinden yapılır: değiştirilecek satır "eski",
 yeni hâli "yeni" olarak yazılır. Böylece her değişiklik orijinale göre kayıtlı kalır ve
 Türkçe sürüm her zaman baştan üretilebilir.
+
+Bilinen tuzak: FFDec bazı iç içe `switch`'leri `loop0:` etiketiyle yazar ama kendi derleyicisi
+bu etiketi okuyamaz ("CURLY_CLOSE expected but COLON found"). Feudalism 2'nin `Skill.as`
+dosyasında etiket kaldırılıp `break loop0;` yerine fonksiyonun son satırı yazıldı (`kod.json`).
+Değiştirilmeyen dosyalar yeniden derlenmediği için başka yerde sorun çıkarmaz.
 
 ## Denemek
 
