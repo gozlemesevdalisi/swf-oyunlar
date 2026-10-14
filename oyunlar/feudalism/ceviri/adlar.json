@@ -1,5 +1,6 @@
 {
   "_aciklama": "Silah, zırh ve birlik adları. Yalnızca WeaponClass, Armor ve Unit sınıflarındaki `NAME = \"...\"` satırlarına uygulanır; aynı kelime kodda anahtar olarak geçse bile oraya dokunulmaz.",
+  "_anahtar_adlar": ["Dagger"],
   "silahlar": {
     "Apprentice Staff": "Çırak Asası",
     "Apprentiece Katana": "Çırak Katanası",
@@ -39,7 +40,7 @@
     "Elite Twohanded Axe": "Seçkin İki Elli Balta",
     "Executioner": "Cellat",
     "Falcion": "Pala",
-    "Fine Bow": "İnce Yay",
+    "Fine Bow": "Kaliteli Yay",
     "Footman Shield": "Yaya Kalkanı",
     "Footman Spear": "Yaya Mızrağı",
     "Footman Sword": "Yaya Kılıcı",

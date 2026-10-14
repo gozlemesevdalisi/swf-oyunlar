@@ -22,7 +22,8 @@ sayfasında Türkçe ile orijinal arasında geçiş düğmesi vardır. Bilgisaya
 depo kökünde `python3 -m http.server` çalıştırıp http://localhost:8000 adresini açmak yeterlidir
 (Ruffle dosyayı doğrudan çift tıklayarak açılan sayfada çalışmaz).
 
-Kontroller: WASD ya da yön tuşları ile hareket, Boşluk ile saldırı, 1-6 iksir ve parşömenler.
+Kontroller: WASD ya da yön tuşları ile hareket, Boşluk ile saldırı. Feudalism'de 1-6 tuşları iksir
+ve parşömenleri kullanır; Feudalism 2'de 1-3 beceri seçer, 4-6 aura açar, Z ve X iksir içirir.
 Kayıtlar oyunu açan programda (tarayıcı ya da Ruffle) saklanır.
 
 ## Klasörler
@@ -40,8 +41,7 @@ araclar/                Türkçe sürümü üreten araçlar
 
 Çeviriyi değiştirmek ya da oyunu geliştirmek için: [GELISTIRME.md](GELISTIRME.md).
 
-## Haklar ve teşekkür
-
+## Haklar ve lisanslar
 
 - Türkçe sürümlerde internete bağlanan reklam (MochiAds) ve istatistik (MochiBot) çağrıları
   kapatıldı; Feudalism 2'de özel karakter oluşturma, bilgisayardan açıldığı gibi her yerde açıktır.
@@ -50,5 +50,6 @@ araclar/                Türkçe sürümü üreten araçlar
   Arial ve Times New Roman ile aynı ölçülerdedir; ekrandaki yazıların sığması için kullanılır.
 - **TeX Gyre yazı tipleri** (Pagella, Bonum, Chorus, Adventor): GUST Font License
   (`araclar/yazitipleri/GUST-Font-License.txt`). Oyuna gömülü yazı tiplerinde olmayan Türkçe
-  harfler bunlardan alınır.
-- **FFDec** (JPEXS Free Flash Decompiler, GPL-3.0): derleme sırasında indirilir, depoda yoktur.
+  harfler bunlardan alınır. Oyunlara bu yazı tiplerinin yalnızca birkaç harfi eklenir; yazı tiplerinin
+  kendisi değiştirilmeden `araclar/yazitipleri/` altında durur.
+- **FFDec** (JPEXS Free Flash Decompiler; program GPL-3.0, kütüphanesi LGPL-3.0): derleme sırasında indirilir, depoda yoktur.

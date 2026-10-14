@@ -1,5 +1,6 @@
 {
   "_aciklama": "Silah, zırh ve birlik adları. Yalnızca WeaponClass, Armor ve Unit sınıflarındaki `NAME = \"...\"` satırlarına uygulanır; aynı kelime kodda anahtar olarak geçse bile oraya dokunulmaz.",
+  "_anahtar_adlar": ["Dagger", "Katar"],
   "silahlar": {
     "Agony": "Azap",
     "Angel Wings": "Melek Kanatları",
@@ -79,7 +80,7 @@
     "Executioner": "Cellat",
     "Falcion": "Kısa Pala",
     "Feather": "Tüy",
-    "Fine Bow": "İnce Yay",
+    "Fine Bow": "Kaliteli Yay",
     "Footman Shield": "Yaya Kalkanı",
     "Footman Spear": "Yaya Mızrağı",
     "Footman Sword": "Yaya Kılıcı",

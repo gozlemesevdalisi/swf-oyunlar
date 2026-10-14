@@ -9,7 +9,7 @@ araclar/derle.sh oyunlar/feudalism
 araclar/derle.sh oyunlar/feudalism-2
 ```
 
-Gerekenler: Java 17+, Python 3, curl, unzip. FFDec ilk çalıştırmada `araclar/.ffdec/` içine
+Gerekenler: Java 17+, Python 3, curl, unzip, sha256sum. FFDec ilk çalıştırmada `araclar/.ffdec/` içine
 indirilir (git'e girmez). Betik `oyunlar/feudalism/feudalism-tr.swf` dosyasını baştan yazar;
 bu dosya elle düzenlenmez, her değişiklik çeviri tablolarından yapılır.
 
@@ -37,6 +37,10 @@ Kurallar:
 - `kod.json`'daki eski metin dosyada aynen bulunmalıdır; bulunamazsa derleme hata verir.
 - Şehir adları ve silah türleri (`"Sword"`, `"Bow"` gibi) kodda anahtar olarak kullanılır;
   bunlar çevrilmez, yoksa oyun bozulur. Ekranda görünen adlar ayrı yerlerdedir.
+- `adlar.json`'daki bir ad kodda `NAME = "..."` satırı dışında da geçiyorsa (ör. bir birliğin
+  fiyatı adına bakılarak belirleniyorsa) derleme hata verir; o yer `kod.json` ile aynı yeni ada
+  çevrilmelidir. Hem eşya adı hem silah türü anahtarı olan adlar (`"Dagger"` gibi)
+  `_anahtar_adlar` listesine yazılır.
 - `sabit.json`'da her yazının parça sayısı orijinaldekiyle aynı olmalıdır. Sığmayan yazı için
   `"boyut": 0.9` gibi küçültme, ortalanması gereken için `"hiza": "orta"` kullanılır.
 - `kutular.json`'da `\n` yeni paragraf demektir. Orijinali birkaç satırlık olan kutular yazıyı

@@ -762,6 +762,13 @@
       "\"Okült Rün\""
     ]
   ],
+  "frame_114/PlaceObject2_3124_65/CLIPACTIONRECORD onClipEvent(enterFrame).as": [["\" gp.\"", "\" altın\""]],
+  "__Packages/Unit.as": [
+    [
+      "this.NAME !== \"Shogun Ghost\"",
+      "this.NAME !== \"Şogun Hayaleti\""
+    ]
+  ],
   "__Packages/Enchant.as": [
     [
       "return \"Footman\\'s \";",
@@ -1013,7 +1020,7 @@
     ],
     [
       "\"Attack with space. Come closer to enemy and shoot him with your bow.\"",
-      "\"Boşluk ile saldır. Düşmana yaklaş ve onu yayınla vur.\""
+      "\"Boşluk ile saldır. Düşmana yaklaş ve onu yayla vur.\""
     ],
     [
       "\"Switch weapons with Shift. Press Shift to switch to take sword.\"",
@@ -1215,7 +1222,7 @@
     ],
     [
       "_loc3_.primary_skill + \" mastery: \"",
-      "{Sword:\"Kılıç\",Axe:\"Balta\",Mace:\"Topuz\",Spear:\"Mızrak\",Dagger:\"Hançer\",Staff:\"Asa\",FarEast:\"Uzak Doğu\",Dual:\"Çift silah\",Bow:\"Yay\",Crossbow:\"Arbalet\",Throwing:\"Fırlatma\",Katar:\"Katar\",Fist:\"Yumruk\"}[_loc3_.primary_skill] + \" ustalığı: \""
+      "({Sword:\"Kılıç\",Axe:\"Balta\",Mace:\"Topuz\",Spear:\"Mızrak\",Dagger:\"Hançer\",Staff:\"Asa\",FarEast:\"Uzak Doğu\",Dual:\"Çift silah\",Bow:\"Yay\",Crossbow:\"Arbalet\",Throwing:\"Fırlatma\",Katar:\"Katar\",Fists:\"Yumruk\"}[_loc3_.primary_skill] || _loc3_.primary_skill) + \" ustalığı: \""
     ],
     [
       "type_txt.text = \"Armor\"",

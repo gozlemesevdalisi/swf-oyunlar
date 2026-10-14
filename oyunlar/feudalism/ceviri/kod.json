@@ -169,7 +169,7 @@
   "frame_90/PlaceObject2_2050_65/CLIPACTIONRECORD onClipEvent(enterFrame).as": [["\" gp.\"", "\" altın\""]],
   "DefineButton2_1105/BUTTONCONDACTION on(rollOver).as": [
     ["\"Karl, Bishop of The Order of Holy Cross\"", "\"Karl, Kutsal Haç Tarikatı Piskoposu\""],
-    ["\"Prefers blunt weapons in melee combat, also know how to throw knifes, but his dexterity doesn\\'t allow him to use other ranged weapons.  Order\\'s warriors depend on their armor and constitution, so some of them are just walking castles!\\nNote: Order produces the best maces and armor in the world.\"", "\"Yakın dövüşte gürz gibi kör silahları sever, bıçak fırlatmayı da bilir ama çevikliği başka menzilli silah kullanmasına yetmez. Tarikat savaşçıları zırhlarına ve dayanıklılıklarına güvenir; bazıları adeta yürüyen kaledir!\\nNot: Dünyanın en iyi gürzlerini ve zırhlarını Tarikat üretir.\""]
+    ["\"Prefers blunt weapons in melee combat, also know how to throw knifes, but his dexterity doesn\\'t allow him to use other ranged weapons.  Order\\'s warriors depend on their armor and constitution, so some of them are just walking castles!\\nNote: Order produces the best maces and armor in the world.\"", "\"Yakın dövüşte gürz gibi künt silahları sever, bıçak fırlatmayı da bilir ama çevikliği başka menzilli silah kullanmasına yetmez. Tarikat savaşçıları zırhlarına ve dayanıklılıklarına güvenir; bazıları adeta yürüyen kaledir!\\nNot: Dünyanın en iyi gürzlerini ve zırhlarını Tarikat üretir.\""]
   ],
   "DefineButton2_1107/BUTTONCONDACTION on(rollOver).as": [
     ["\"Niora, Mistress of The East Eampire\"", "\"Niora, Doğu İmparatorluğu'nun Hanımı\""],

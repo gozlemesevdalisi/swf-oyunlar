@@ -3,7 +3,7 @@
 #
 # Kullanım (depo kökünden):  araclar/derle.sh oyunlar/feudalism
 #
-# Gerekenler: Java 17+, Python 3, curl, unzip. FFDec (JPEXS Free Flash Decompiler, GPL-3.0)
+# Gerekenler: Java 17+, Python 3, curl, unzip, sha256sum. FFDec (JPEXS Free Flash Decompiler, GPL-3.0)
 # ilk çalıştırmada araclar/.ffdec klasörüne indirilir; depoya girmez.
 set -euo pipefail
 
@@ -22,10 +22,11 @@ ORIJINAL="$OYUN_KLASORU/$AD-orijinal.swf"
 CIKTI="$OYUN_KLASORU/$AD-tr.swf"
 FFDEC="$KOK/araclar/.ffdec"
 
-if [ ! -f "$FFDEC/ffdec-cli.jar" ]; then
+if [ ! -f "$FFDEC/.tamam" ]; then
   echo "FFDec $FFDEC_SURUM indiriliyor..."
+  rm -rf "$FFDEC"
   mkdir -p "$FFDEC"
-  curl -sSL -o "$FFDEC/ffdec.zip" \
+  curl -fsSL -o "$FFDEC/ffdec.zip" \
     "https://github.com/jindrapetrik/jpexs-decompiler/releases/download/version$FFDEC_SURUM/ffdec_$FFDEC_SURUM.zip"
   if ! echo "$FFDEC_SHA256  $FFDEC/ffdec.zip" | sha256sum -c --quiet -; then
     echo "HATA: indirilen FFDec dosyası beklenen dosya değil; derleme durduruldu." >&2
@@ -34,6 +35,8 @@ if [ ! -f "$FFDEC/ffdec-cli.jar" ]; then
   fi
   unzip -q -o "$FFDEC/ffdec.zip" -d "$FFDEC"
   rm "$FFDEC/ffdec.zip"
+  # Açma yarıda kalırsa bir sonraki çalıştırmada baştan indirilsin diye en son işaretlenir.
+  touch "$FFDEC/.tamam"
 fi
 
 GECICI="$(mktemp -d)"

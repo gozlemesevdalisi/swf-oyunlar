@@ -426,6 +426,25 @@ public class Cevir {
    * Liberation yazı tipleriyle yapılır.
    */
   private static void fitWidth(SWF swf, DefineEditTextTag tag, String original, boolean bold) {
+    int width = boxWidth(swf, tag, original, bold);
+    if (width > 0 && tag.bounds.Xmin + width < tag.bounds.Xmax) {
+      tag.bounds.Xmax = tag.bounds.Xmin + width;
+    }
+  }
+
+  /**
+   * Sağa yaslı tek satırlık etikette sağ kenar yerinde kalır; yazı sığmıyorsa kutu sola doğru
+   * genişler. (autoSize kutuyu sol kenara göre küçülttüğü için yazıyı sola kaydırırdı.)
+   */
+  private static void growLeft(SWF swf, DefineEditTextTag tag, String text) {
+    int width = boxWidth(swf, tag, text, false);
+    if (tag.bounds.Xmax - tag.bounds.Xmin < width) {
+      tag.bounds.Xmin = tag.bounds.Xmax - width;
+    }
+  }
+
+  /** Yazının en uzun satırının kutuda kaplayacağı genişlik (twip); boş yazıda 0. */
+  private static int boxWidth(SWF swf, DefineEditTextTag tag, String text, boolean bold) {
     FontTag font = (FontTag) swf.getCharacter(tag.fontId);
     String name = font == null ? "" : font.getFontNameIntag();
     boolean serif = name.contains("serif") || name.contains("Times") || name.contains("Book");
@@ -434,14 +453,11 @@ public class Cevir {
     Font measure = DEVICE_FONTS.get(serif ? "serif" : "sans").get(style).deriveFont(tag.fontHeight / 20f);
     java.awt.font.FontRenderContext frc = new java.awt.font.FontRenderContext(null, true, true);
     double widest = 0;
-    for (String line : original.split("[\\r\\n]+")) {
+    for (String line : text.split("[\\r\\n]+")) {
       widest = Math.max(widest, measure.getStringBounds(line.stripTrailing(), frc).getWidth());
     }
     // Flash kutusunda her iki yanda 2 piksel boşluk vardır; ölçü farkları için biraz pay bırakılır.
-    int width = (int) Math.ceil((widest * 1.03 + 6) * 20);
-    if (widest > 0 && tag.bounds.Xmin + width < tag.bounds.Xmax) {
-      tag.bounds.Xmax = tag.bounds.Xmin + width;
-    }
+    return widest > 0 ? (int) Math.ceil((widest * 1.03 + 6) * 20) : 0;
   }
 
   /** Ekran kutusunun yazısını değiştirir; çok satırlı kutularda kelime kaydırmayı açar. */
@@ -475,6 +491,9 @@ public class Cevir {
       } else if (paragraph && tag.multiline) {
         fitWidth(swf, tag, original, false);
         tag.wordWrap = true;
+      } else if (tag.align == 1) {
+        tag.wordWrap = false;
+        growLeft(swf, tag, text);
       } else {
         tag.wordWrap = false;
         tag.autoSize = true;
