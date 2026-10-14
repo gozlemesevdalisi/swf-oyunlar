@@ -6,9 +6,16 @@ import com.jpexs.decompiler.flash.tags.DefineEditTextTag;
 import com.jpexs.decompiler.flash.tags.base.FontTag;
 import com.jpexs.decompiler.flash.tags.base.MissingCharacterHandler;
 import com.jpexs.decompiler.flash.tags.base.StaticTextTag;
+import com.jpexs.decompiler.flash.tags.base.ShapeTag;
 import com.jpexs.decompiler.flash.tags.base.TextTag;
 import com.jpexs.decompiler.flash.types.GLYPHENTRY;
+import com.jpexs.decompiler.flash.types.SHAPE;
 import com.jpexs.decompiler.flash.types.TEXTRECORD;
+import com.jpexs.decompiler.flash.types.shaperecords.CurvedEdgeRecord;
+import com.jpexs.decompiler.flash.types.shaperecords.EndShapeRecord;
+import com.jpexs.decompiler.flash.types.shaperecords.SHAPERECORD;
+import com.jpexs.decompiler.flash.types.shaperecords.StraightEdgeRecord;
+import com.jpexs.decompiler.flash.types.shaperecords.StyleChangeRecord;
 import java.awt.Font;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -120,6 +127,15 @@ public class Cevir {
       }
     }
 
+    int shapes = 0;
+    File sekiller = new File(tables, "sekiller.json");
+    if (sekiller.exists()) {
+      for (JsonObject.Member m : read(sekiller)) {
+        if (m.getName().startsWith("_")) continue;
+        if (replaceDrawnText(swf, Integer.parseInt(m.getName()), m.getValue().asObject(), root)) shapes++;
+      }
+    }
+
     if (!ERRORS.isEmpty()) {
       ERRORS.forEach(e -> System.err.println("HATA: " + e));
       System.exit(1);
@@ -127,7 +143,7 @@ public class Cevir {
     try (OutputStream out = new FileOutputStream(output)) {
       swf.saveTo(out);
     }
-    System.out.println(statics + " sabit yazı ve " + edits + " ekran kutusu çevrildi.");
+    System.out.println(statics + " sabit yazı, " + edits + " ekran kutusu ve " + shapes + " çizilmiş yazı çevrildi.");
   }
 
   /**
@@ -193,6 +209,95 @@ public class Cevir {
       font.setItalic(italic);
       font.setModified(true);
     }
+  }
+
+  /**
+   * Çizim olarak gömülmüş bir yazıyı değiştirir ("You died..." gibi). Bu çizimlerde yazı, son
+   * "yeni stiller" kaydından sonra tek renkle çizilen bölümdür; o bölüm silinip yerine verilen
+   * yazının harf çizgileri aynı renkle eklenir.
+   */
+  private static boolean replaceDrawnText(SWF swf, int id, JsonObject spec, File root) throws Exception {
+    if (!(swf.getCharacter(id) instanceof ShapeTag shape)) {
+      ERRORS.add(id + " çizim değil");
+      return false;
+    }
+    List<SHAPERECORD> records = shape.getShapes().shapeRecords;
+    int styles = -1;
+    for (int i = 0; i < records.size(); i++) {
+      if (records.get(i) instanceof StyleChangeRecord c && c.stateNewStyles) styles = i;
+    }
+    int end = records.size() - 1;
+    if (styles < 0 || !(records.get(end) instanceof EndShapeRecord)) {
+      ERRORS.add(id + ": çizimde yazı bölümü bulunamadı");
+      return false;
+    }
+    ((StyleChangeRecord) records.get(styles)).stateMoveTo = false;
+    records.subList(styles + 1, end).clear();
+
+    Font font = Font.createFont(Font.TRUETYPE_FONT, new File(root, spec.getString("yazitipi", "")));
+    float size = (float) spec.getDouble("boyut", 40) * 20;
+    String text = spec.getString("metin", "");
+    java.awt.font.GlyphVector glyphs = font.deriveFont(size)
+        .createGlyphVector(new java.awt.font.FontRenderContext(null, true, true), text);
+    double width = glyphs.getLogicalBounds().getWidth();
+    int startX = (int) Math.round(spec.getDouble("orta_x", 0) * 20 - width / 2);
+    int baseline = (int) Math.round(spec.getDouble("taban", 0) * 20);
+
+    List<SHAPERECORD> added = new ArrayList<>();
+    for (int i = 0; i < text.length(); i++) {
+      if (Character.isWhitespace(text.charAt(i))) continue;
+      int x = startX + (int) Math.round(glyphs.getGlyphPosition(i).getX());
+      // Kütüphane harfi 1024 birimlik sabit büyüklükte çizer; noktalar istenen boya ölçeklenir.
+      // Yuvarlama hatası birikmesin diye her nokta mutlak konumundan hesaplanır.
+      SHAPE glyph = SHAPERECORD.fontCharacterToSHAPE(font, 1024, text.charAt(i));
+      double k = size / 1024.0;
+      long ax = 0, ay = 0;
+      int px = 0, py = 0;
+      for (SHAPERECORD r : glyph.shapeRecords) {
+        if (r instanceof EndShapeRecord) continue;
+        SHAPERECORD copy = r.clone();
+        if (copy instanceof StyleChangeRecord c) {
+          c.stateNewStyles = false;
+          c.stateLineStyle = false;
+          if (c.stateMoveTo) {
+            ax = c.moveDeltaX;
+            ay = c.moveDeltaY;
+            px = (int) Math.round(ax * k);
+            py = (int) Math.round(ay * k);
+            c.moveDeltaX = px + x;
+            c.moveDeltaY = py + baseline;
+          }
+        } else if (copy instanceof StraightEdgeRecord e) {
+          ax += e.deltaX;
+          ay += e.deltaY;
+          int nx = (int) Math.round(ax * k), ny = (int) Math.round(ay * k);
+          e.deltaX = nx - px;
+          e.deltaY = ny - py;
+          e.generalLineFlag = true;
+          e.vertLineFlag = false;
+          px = nx;
+          py = ny;
+        } else if (copy instanceof CurvedEdgeRecord e) {
+          long cx = ax + e.controlDeltaX, cy = ay + e.controlDeltaY;
+          ax = cx + e.anchorDeltaX;
+          ay = cy + e.anchorDeltaY;
+          int ncx = (int) Math.round(cx * k), ncy = (int) Math.round(cy * k);
+          int nx = (int) Math.round(ax * k), ny = (int) Math.round(ay * k);
+          e.controlDeltaX = ncx - px;
+          e.controlDeltaY = ncy - py;
+          e.anchorDeltaX = nx - ncx;
+          e.anchorDeltaY = ny - ncy;
+          px = nx;
+          py = ny;
+        }
+        copy.calculateBits();
+        added.add(copy);
+      }
+    }
+    records.addAll(styles + 1, added);
+    shape.updateBounds();
+    shape.setModified(true);
+    return true;
   }
 
   private static JsonObject read(File file) throws IOException {

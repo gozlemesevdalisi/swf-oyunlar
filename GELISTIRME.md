@@ -19,7 +19,7 @@ Betiğin adımları:
 2. `araclar/kod_cevir.py` koddaki ekranda görünen metinleri çevirir.
 3. Çevrilen kod dosyaları FFDec ile oyuna geri derlenir.
 4. `araclar/Cevir.java` sabit yazıları ve ekran kutularını değiştirir, gömülü yazı tiplerine
-   eksik Türkçe harfleri ekler.
+   eksik Türkçe harfleri ekler, resim olarak çizilmiş yazıları yeniden çizer.
 
 ## Çeviri tabloları (`oyunlar/feudalism/ceviri/`)
 
@@ -30,6 +30,7 @@ Betiğin adımları:
 | `sabit.json`       | Menü düğmeleri, ipuçları gibi sabit yazılar (kimlik numarasıyla)              |
 | `kutular.json`     | Öğretici, diyaloglar, şehir başlıkları gibi ekran kutuları (kimlik numarasıyla) |
 | `yazitipleri.json` | Eksik harflerin hangi benzer yazı tipinden alınacağı                          |
+| `sekiller.json`    | Resim olarak çizilmiş yazılar ("You died..." → "Öldün...")                    |
 
 Kurallar:
 

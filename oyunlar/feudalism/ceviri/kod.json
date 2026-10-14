@@ -3,6 +3,10 @@
   "frame_1/DoAction_2.as": [
     ["__com_mochibot__(\"7cde74e8\",this,10301,true);", "// İnternete istatistik gönderen MochiBot çağrısı kapatıldı: oyun çevrimdışı çalışır."]
   ],
+  "__Packages/Quest.as": [
+    ["NAME = \"Quest Melee Rogue\";", "NAME = \"Görev Haydudu\";"],
+    ["NAME = \"Quest Ranged Rogue\";", "NAME = \"Görev Okçu Haydudu\";"]
+  ],
   "__Packages/Enchant.as": [
     ["\"Piercing \"", "\"Delici \""],
     ["\"Bloody \"", "\"Kanlı \""],
