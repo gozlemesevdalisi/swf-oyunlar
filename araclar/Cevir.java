@@ -81,7 +81,8 @@ public class Cevir {
     };
 
     JsonObject statik = read(new File(tables, "sabit.json"));
-    prepareFonts(swf, statik);
+    JsonObject kutular = read(new File(tables, "kutular.json"));
+    prepareFonts(swf, statik, kutular, fonts);
 
     int statics = 0;
     for (JsonObject.Member m : statik) {
@@ -96,14 +97,21 @@ public class Cevir {
     }
 
     int edits = 0;
-    JsonObject kutular = read(new File(tables, "kutular.json"));
     for (JsonObject.Member m : kutular) {
       if (m.getName().startsWith("_")) continue;
       int id = Integer.parseInt(m.getName());
       JsonValue v = m.getValue();
       String text = v.isString() ? v.asString() : v.asObject().getString("metin", "");
       double scale = v.isString() ? 1 : v.asObject().getDouble("boyut", 1);
+      JsonValue wrap = v.isString() ? null : v.asObject().get("kaydir");
+      int originalXmax = swf.getCharacter(id) instanceof DefineEditTextTag t ? t.bounds.Xmax : 0;
       if (replaceEdit(swf, id, text)) {
+        if (wrap != null) {
+          // Kodun doldurduğu kutularda kaydırma kararı elle verilir; kutu orijinal genişliğinde kalır.
+          DefineEditTextTag tag = (DefineEditTextTag) swf.getCharacter(id);
+          tag.wordWrap = wrap.asBoolean();
+          tag.bounds.Xmax = originalXmax;
+        }
         if (scale != 1) {
           DefineEditTextTag tag = (DefineEditTextTag) swf.getCharacter(id);
           tag.fontHeight = (int) Math.round(tag.fontHeight * scale);
@@ -127,8 +135,25 @@ public class Cevir {
    * bütün harflerin genişliklerini o yazı tipinden yazar. Orijinal yazı tiplerinde genişlik
    * tablosu yoktur; tablo olmadan yeni metnin harf aralıkları tutmaz.
    */
-  private static void prepareFonts(SWF swf, JsonObject statik) {
+  private static void prepareFonts(SWF swf, JsonObject statik, JsonObject kutular, JsonObject fonts) {
     Map<Integer, StringBuilder> needed = new HashMap<>();
+    // Kodun yazı yazdığı, yazı tipi gömülü kutular için yazitipleri.json'daki "ekle" harfleri.
+    for (JsonObject.Member m : fonts) {
+      if (m.getName().startsWith("_")) continue;
+      String extra = m.getValue().asObject().getString("ekle", "");
+      if (!extra.isEmpty()) {
+        needed.computeIfAbsent(Integer.parseInt(m.getName()), k -> new StringBuilder()).append(extra);
+      }
+    }
+    // Yazı tipi gömülü ekran kutularının çevirileri.
+    for (JsonObject.Member m : kutular) {
+      if (m.getName().startsWith("_")) continue;
+      if (!(swf.getCharacter(Integer.parseInt(m.getName())) instanceof DefineEditTextTag tag)) continue;
+      if (!tag.useOutlines) continue;
+      JsonValue v = m.getValue();
+      String text = v.isString() ? v.asString() : v.asObject().getString("metin", "");
+      needed.computeIfAbsent(tag.fontId, k -> new StringBuilder()).append(text.replaceAll("<[^>]+>", ""));
+    }
     for (JsonObject.Member m : statik) {
       if (m.getName().startsWith("_")) continue;
       if (!(swf.getCharacter(Integer.parseInt(m.getName())) instanceof StaticTextTag tag)) continue;
@@ -148,6 +173,7 @@ public class Cevir {
       // Kaynak dosya zaten kalın/italik olduğu için Java'nın yapay kalınlaştırması kapatılır.
       boolean bold = font.isBold();
       boolean italic = font.isItalic();
+      boolean hadLayout = font.hasLayout();
       font.setBold(false);
       font.setItalic(false);
       e.getValue().chars().distinct().forEach(ch -> {
@@ -157,8 +183,12 @@ public class Cevir {
           ERRORS.add("yazı tipi " + e.getKey() + " için '" + c + "' harfi eklenemedi");
         }
       });
-      font.setAdvanceValues(source);
-      font.setHasLayout(true);
+      // Genişlik tablosu olan yazı tiplerinde eski harflerin genişlikleri korunur; yeni harflerinki
+      // eklenirken yazılır.
+      if (!hadLayout) {
+        font.setAdvanceValues(source);
+        font.setHasLayout(true);
+      }
       font.setBold(bold);
       font.setItalic(italic);
       font.setModified(true);
@@ -316,10 +346,13 @@ public class Cevir {
     }
     if (value.startsWith("html:")) {
       String original = tag.initialText == null ? "" : tag.initialText;
-      fitWidth(swf, tag, original.replaceAll("<sbr\\s*/>", "\n").replaceAll("<[^>]+>", ""), original.contains("<b>"));
       tag.html = true;
       tag.initialText = value.substring(5);
-      tag.wordWrap = true;
+      // Elle satır kırılmış HTML kutuları kaydırılır; tek satırlıklar olduğu gibi kalır.
+      if (original.contains("<sbr")) {
+        fitWidth(swf, tag, original.replaceAll("<sbr\\s*/>", "\n").replaceAll("<[^>]+>", ""), original.contains("<b>"));
+        tag.wordWrap = true;
+      }
     } else {
       String text = value.replace("\n", "\r");
       if (tag.html) {
