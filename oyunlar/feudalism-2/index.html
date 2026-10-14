@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feudalism 2</title>
+<style>
+  :root {
+    --zemin: #15130f;
+    --panel: #221e18;
+    --kenar: #3a3328;
+    --yazi: #ece4d4;
+    --soluk: #a89c86;
+    --vurgu: #d9a441;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--zemin);
+    color: var(--yazi);
+    font: 15px/1.5 "Liberation Sans", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    gap: 12px;
+  }
+  header {
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
+  }
+  h1 { margin: 0; font-size: 20px; letter-spacing: 0.04em; }
+  h1 a { color: var(--soluk); text-decoration: none; font-weight: normal; }
+  h1 a:hover { color: var(--yazi); }
+  .dil { display: flex; border: 1px solid var(--kenar); border-radius: 8px; overflow: hidden; }
+  .dil button {
+    background: var(--panel);
+    color: var(--soluk);
+    border: 0;
+    padding: 8px 14px;
+    font: inherit;
+    cursor: pointer;
+  }
+  .dil button[aria-pressed="true"] { background: var(--vurgu); color: #1b1408; font-weight: bold; }
+  #sahne {
+    width: 100%;
+    max-width: 960px;
+    aspect-ratio: 4 / 3;
+    max-height: calc(100vh - 150px);
+    background: #000;
+    border: 1px solid var(--kenar);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #sahne ruffle-player { width: 100%; height: 100%; display: block; }
+  .bilgi {
+    width: 100%;
+    max-width: 960px;
+    color: var(--soluk);
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 20px;
+  }
+  .bilgi b { color: var(--yazi); font-weight: normal; }
+  .emek { width: 100%; max-width: 960px; margin: 0; color: var(--soluk); font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1><a href="../../">Oyunlar</a> / Feudalism 2</h1>
+  <div class="dil" role="group" aria-label="Dil">
+    <button type="button" data-swf="feudalism-2-tr.swf">Türkçe</button>
+    <button type="button" data-swf="feudalism-2-orijinal.swf">Orijinal (İngilizce)</button>
+  </div>
+</header>
+<div id="sahne"></div>
+<div class="bilgi">
+  <span><b>Hareket:</b> WASD ya da yön tuşları</span>
+  <span><b>Saldırı:</b> Boşluk</span>
+  <span><b>İksir ve parşömenler:</b> 1-6</span>
+  <span>Kayıtlar bu tarayıcıda saklanır.</span>
+</div>
+<p class="emek">Feudalism 2: Vitaly Zaborov (2008). Türkçe çeviri yapımcının izniyle yapılmıştır.</p>
+<script src="../../ruffle/ruffle.js"></script>
+<script>
+  window.RufflePlayer = window.RufflePlayer || {};
+  window.RufflePlayer.config = {
+    autoplay: "on",
+    unmuteOverlay: "hidden",
+    splashScreen: false,
+    letterbox: "on",
+    contextMenu: "rightClickOnly",
+    openUrlMode: "allow",
+    // Oyun Arial ve Times New Roman ölçülerine göre çizilmiş; aynı ölçülerdeki ücretsiz
+    // Liberation yazı tipleri hem yazıların sığmasını hem Türkçe harfleri sağlar.
+    fontSources: [
+      "../../yazitipleri/LiberationSans-Regular.ttf",
+      "../../yazitipleri/LiberationSans-Bold.ttf",
+      "../../yazitipleri/LiberationSans-Italic.ttf",
+      "../../yazitipleri/LiberationSans-BoldItalic.ttf",
+      "../../yazitipleri/LiberationSerif-Regular.ttf",
+      "../../yazitipleri/LiberationSerif-Bold.ttf",
+      "../../yazitipleri/LiberationSerif-Italic.ttf",
+      "../../yazitipleri/LiberationSerif-BoldItalic.ttf",
+    ],
+    defaultFonts: { sans: ["Liberation Sans"], serif: ["Liberation Serif"] },
+  };
+
+  const sahne = document.getElementById("sahne");
+  const dugmeler = document.querySelectorAll(".dil button");
+  let oynatici = null;
+
+  function ac(swf) {
+    if (oynatici) oynatici.remove();
+    oynatici = window.RufflePlayer.newest().createPlayer();
+    sahne.appendChild(oynatici);
+    oynatici.load(swf);
+    dugmeler.forEach((d) => d.setAttribute("aria-pressed", String(d.dataset.swf === swf)));
+    try { localStorage.setItem("feudalism-2-dil", swf); } catch (e) {}
+  }
+
+  dugmeler.forEach((d) => d.addEventListener("click", () => ac(d.dataset.swf)));
+  let secili = "feudalism-2-tr.swf";
+  try { secili = localStorage.getItem("feudalism-2-dil") || secili; } catch (e) {}
+  window.addEventListener("load", () => ac(secili));
+</script>
+</body>
+</html>
