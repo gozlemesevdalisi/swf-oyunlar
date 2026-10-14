@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SWF Oyunları</title>
+<style>
+  :root {
+    --zemin: #15130f;
+    --panel: #221e18;
+    --kenar: #3a3328;
+    --yazi: #ece4d4;
+    --soluk: #a89c86;
+    --vurgu: #d9a441;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--zemin);
+    color: var(--yazi);
+    font: 16px/1.5 "Liberation Sans", Arial, sans-serif;
+    padding: 32px 16px;
+  }
+  main { max-width: 720px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  p { margin: 0 0 24px; color: var(--soluk); }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  a.oyun {
+    display: block;
+    background: var(--panel);
+    border: 1px solid var(--kenar);
+    border-radius: 10px;
+    padding: 16px 18px;
+    color: inherit;
+    text-decoration: none;
+  }
+  a.oyun:hover { border-color: var(--vurgu); }
+  .ad { font-size: 19px; font-weight: bold; }
+  .aciklama { color: var(--soluk); font-size: 15px; }
+  .etiket {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: var(--vurgu);
+    color: #1b1408;
+    font-size: 12px;
+    font-weight: bold;
+    vertical-align: middle;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>SWF Oyunları</h1>
+  <p>Eski Flash oyunları, Flash olmadan tarayıcıda.</p>
+  <ul>
+    <li>
+      <a class="oyun" href="oyunlar/feudalism/">
+        <span class="ad">Feudalism</span><span class="etiket">Türkçe</span>
+        <div class="aciklama">Ortaçağ strateji ve rol yapma oyunu: kahramanını seç, asker topla, şehirleri ele geçir.</div>
+      </a>
+    </li>
+  </ul>
+</main>
+</body>
+</html>
